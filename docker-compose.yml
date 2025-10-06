@@ -62,6 +62,8 @@ services:
       - "7077:7077"
     volumes:
       - ./spark-app:/app
+      - ./checkpoints:/tmp/spark_checkpoints
+      - ./checkpoint_postgres:/tmp/spark_checkpoints_postgres
     networks:
       - app-network
 
@@ -89,9 +91,24 @@ services:
     networks:
       - app-network
 
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_USER: spark
+      POSTGRES_PASSWORD: spark123
+      POSTGRES_DB: newsdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
 volumes:
   elasticsearch-data:
   grafana-data:
+  postgres_data:
 
 networks:
   app-network:

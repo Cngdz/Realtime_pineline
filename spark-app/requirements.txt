@@ -5,3 +5,4 @@ joblib==1.2.0
 transformers==4.52.4
 torch==2.6.0
 pyarrow
+elasticsearch==8.4.1
